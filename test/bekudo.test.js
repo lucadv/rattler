@@ -1,11 +1,15 @@
-const assert    = require("chai").assert;
-const simpleWebScrapper = require("../index");
+const assert = require("chai").assert;
+const scrapper = require("../index.js");
 
 describe("Simple-web-scrapper tests using ASSERT interface from CHAI module: ", function() {
-	describe("Check addTested Function: ", function() {
-		it("Check the returned value using: assert.equal(value,'value'): ", function() {
-			result   = simpleWebScrapper.addTested("text");
-			assert.equal(result, "text tested");
+	describe("Check getRealEstatesPrices Function: ", function() {
+		it("Check the result (only first line): ", function() {
+            const baseURL = 'https://www.idealista.com';
+            const searchURL = '/venta-viviendas/malaga/centro/la-victoria-conde-de-urena-gibralfaro/';
+            const cssSelector = 'span.item-price';
+            const result = getRealEstatesPrices(baseURL, searchURL, cssSelector);
+            const firstLine = result.split('\n')[0];
+			assert.equal(firstline, "prices for /venta-viviendas/malaga/centro/la-victoria-conde-de-urena-gibralfaro/ [ '237.000',");
 		});		
 	});		
 });
