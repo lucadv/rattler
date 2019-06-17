@@ -1,0 +1,16 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "comma-dangle": 0,
+    "no-console": 0,
+    "padded-blocks": "off",
+    "no-multi-assign": "off",
+    "consistent-return": "off",
+    "prefer-destructuring": ["off", {
+      "array": true,
+      "object": true
+    }, {
+      "enforceForRenamedProperties": false
+    }]
+  }
+}
