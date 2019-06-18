@@ -42,5 +42,10 @@ describe('Rattler', () => {
       expect(text).to.equal('my text');
     });
 
+    //TODO add test for multiple matches
+
+    //TODO add test for selector not found
+    
+
   });
 });
