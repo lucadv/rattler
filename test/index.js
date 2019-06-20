@@ -79,6 +79,10 @@ describe('Rattler', () => {
           Axios.get.restore();
         });
 
+        afterEach(async () => {
+          axiosSpy.resetHistory();
+        });
+
         it('should extract text from multiple selectors', async () => {
           const config = {
             baseURL,
