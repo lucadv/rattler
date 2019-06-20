@@ -43,9 +43,9 @@ describe('Rattler', () => {
         const config = {
           baseURL: baseURL,
           extract: [{
-            name: 'info-1',
-            searchURL: searchURL,
-            cssSelector: 'span.my-class'
+            label: 'info-1',
+            from: searchURL,
+            path: 'span.my-class'
           }]
         };
         const rt = new Rattler(config);
@@ -76,13 +76,13 @@ describe('Rattler', () => {
         const config = {
           baseURL: baseURL,
           extract: [{
-            name: 'info-1',
-            searchURL: searchURL,
-            cssSelector: 'span.my-class'
+            label: 'info-1',
+            from: searchURL,
+            path: 'span.my-class'
           }, {
-            name: 'info-2',
-            searchURL: searchURL,
-            cssSelector: 'span.my-other-class'
+            label: 'info-2',
+            from: searchURL,
+            path: 'span.my-other-class'
           }]
         };
         const rt = new Rattler(config);
