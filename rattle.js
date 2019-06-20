@@ -8,6 +8,6 @@ const config = {
 
 const rt = new Rattler(config);
 
-rt.getText()
+rt.extract()
   .then(content => console.log('content', content))
   .catch(err => console.log('err', err));
