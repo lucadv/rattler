@@ -26,29 +26,29 @@ describe('Rattler', () => {
 
     describe('extract', () => {
 
+      const baseURL = 'http://www.example.com';
+      const searchURL = '/endpoint';
       let axiosSpy;
-  
+
       describe('(single)', () => {
-  
-        const baseURL = 'http://www.example.com';
-        const searchURL = '/endpoint';
+
         const html = '<html><body><span class="my-class">my text</span></body></html>';
-  
+
         before(async () => {
-          axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }))
+          axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }));
         });
-  
+
         after(async () => {
           Axios.get.restore();
         });
-  
+
         afterEach(async () => {
           axiosSpy.resetHistory();
         });
-  
+
         it('should extract text in css selector path', async () => {
           const config = {
-            baseURL: baseURL,
+            baseURL,
             extract: [{
               label: 'info-1',
               from: searchURL,
@@ -63,25 +63,25 @@ describe('Rattler', () => {
           expect(result['info-1'].extractedWith).to.equal('span.my-class');
           expect(result['info-1'].extractedInfo).to.equal('my text');
         });
-  
-        //TODO add test for selector not found
+
+        // TODO add test for selector not found
       });
-  
+
       describe('(multiple same page)', () => {
-  
+
         const html = '<html><body><span class="my-class">my text</span><span class="my-other-class">my other text</span></body></html>';
-        
+
         before(async () => {
-          axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }))
+          axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }));
         });
-  
+
         after(async () => {
           Axios.get.restore();
         });
-  
+
         it('should extract text from multiple selectors', async () => {
           const config = {
-            baseURL: baseURL,
+            baseURL,
             extract: [{
               label: 'info-1',
               from: searchURL,
@@ -105,7 +105,7 @@ describe('Rattler', () => {
           expect(result['info-2'].extractedInfo).to.equal('my other text');
         });
       });
-  
+
     });
   });
 
