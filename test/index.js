@@ -49,7 +49,7 @@ describe('Rattler', () => {
         it('should extract text in css selector path', async () => {
           const config = {
             baseURL,
-            extract: [{
+            scrapeList: [{
               label: 'info-1',
               from: searchURL,
               path: 'span.my-class'
@@ -86,7 +86,7 @@ describe('Rattler', () => {
         it('should extract text from multiple selectors', async () => {
           const config = {
             baseURL,
-            extract: [{
+            scrapeList: [{
               label: 'info-1',
               from: searchURL,
               path: 'span.my-class'
