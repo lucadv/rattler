@@ -51,7 +51,7 @@ describe('Rattler', () => {
             baseURL,
             scrapeList: [{
               label: 'info-1',
-              searchURL: searchURL,
+              searchURL,
               path: 'span.my-class'
             }]
           };
@@ -62,7 +62,7 @@ describe('Rattler', () => {
           expect(result['info-1'].extractedFrom).to.equal(baseURL + searchURL);
           expect(result['info-1'].extractedWith).to.equal('span.my-class');
           expect(result['info-1'].extractedInfo).to.equal('my text');
-          expect(rt.stats.total_requests).to.equal(1);
+          expect(axiosSpy.callCount).to.equal(1);
         });
 
         // TODO add test for selector not found
@@ -89,11 +89,11 @@ describe('Rattler', () => {
             baseURL,
             scrapeList: [{
               label: 'info-1',
-              searchURL: searchURL,
+              searchURL,
               path: 'span.my-class'
             }, {
               label: 'info-2',
-              searchURL: searchURL,
+              searchURL,
               path: 'span.my-other-class'
             }]
           };
@@ -108,7 +108,7 @@ describe('Rattler', () => {
           expect(result['info-2'].extractedFrom).to.equal(baseURL + searchURL);
           expect(result['info-2'].extractedWith).to.equal('span.my-other-class');
           expect(result['info-2'].extractedInfo).to.equal('my other text');
-          expect(rt.stats.total_requests).to.equal(1);
+          expect(axiosSpy.callCount).to.equal(1);
         });
       });
 
