@@ -15,8 +15,8 @@ config | object | `yes` | The config object containing information about what an
 config.baseURL | string | `yes` | The base url from which you want to load the page for all requests.
 config.scrapeList | object[] | `yes` | The scrape list of stuff that you want to extract. Must have min one element inside.
 config.scrapeList[n].label | string | `yes` | Each scrape request in the scrape list will produce a result in JSON format, this field represent the name of the key inside the result of this scrape request.
-config.extract[n].searchURL | string | no | The search url to be used to load the page. In absence of a baseURL this field will be required.
-config.extract[n].cssSelector | string | `yes` | The [css selector](https://www.w3schools.com/cssref/css_selectors.asp) of the element you want to extract for this particular element in the scrapeList.
+config.scrapeList[n].searchURL | string | no | The search url to be used to load the page. In absence of a baseURL this field will be required.
+config.scrapeList[n].cssSelector | string | `yes` | The [css selector](https://www.w3schools.com/cssref/css_selectors.asp) of the element you want to extract for this particular element in the scrapeList.
 
 #### Config examples
 
