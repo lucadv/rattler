@@ -62,6 +62,7 @@ describe('Rattler', () => {
           expect(result['info-1'].extractedFrom).to.equal(baseURL + searchURL);
           expect(result['info-1'].extractedWith).to.equal('span.my-class');
           expect(result['info-1'].extractedInfo).to.equal('my text');
+          expect(rt.stats.total_requests).to.equal(1);
         });
 
         // TODO add test for selector not found
@@ -107,6 +108,7 @@ describe('Rattler', () => {
           expect(result['info-2'].extractedFrom).to.equal(baseURL + searchURL);
           expect(result['info-2'].extractedWith).to.equal('span.my-other-class');
           expect(result['info-2'].extractedInfo).to.equal('my other text');
+          expect(rt.stats.total_requests).to.equal(1);
         });
       });
 
