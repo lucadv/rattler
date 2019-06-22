@@ -1,9 +1,15 @@
 ## TODOS
 
-- [x] rename config.extract to config.scrapeList
-- [x] rename `from` inside scrapeList to searchURL
+- [x] BEQUI-1 rename config.extract to config.scrapeList
+- [x] BEQUI-2 rename `from` inside scrapeList to searchURL
  * reason: make more sense to me 
-- [x] relax the cssSelector validation, just a string and required()
+- [x] BEQUI-3 relax the cssSelector validation, just a string and required()
     * reason: too hard to support every possible combination in a regex 
-- [ ] implement an http request per each scrapeList element
-- [ ] cache every request, do not repeate the request if it's already been done
+- [x] BEQUI-4 implement an http request per each scrapeList element
+- [ ] BEQUI-5 cache every request, do not repeate the request if it's already been done (not for now)
+- [ ] BEQUI-6 what does Axios do when the request returns a status code other than 200? does it reject? does it resolve with an object? In case it resolves, we should implement a failing strategy: when the status code is other than 200, we should build a fail object. Suggestion: scrapeSingle function, check the status code, if not 2xx build and return a failing object. 
+
+## Next items:
+Please pick the one on top of next and work on a branch
+
+- [ ] BEQUI-6
