@@ -13,4 +13,4 @@ test:lint:
 
 test:cov:
   script:
-    - npm run test
+    - npm run cov
