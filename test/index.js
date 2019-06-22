@@ -51,7 +51,7 @@ describe('Rattler', () => {
             baseURL,
             scrapeList: [{
               label: 'info-1',
-              from: searchURL,
+              searchURL: searchURL,
               path: 'span.my-class'
             }]
           };
@@ -88,11 +88,11 @@ describe('Rattler', () => {
             baseURL,
             scrapeList: [{
               label: 'info-1',
-              from: searchURL,
+              searchURL: searchURL,
               path: 'span.my-class'
             }, {
               label: 'info-2',
-              from: searchURL,
+              searchURL: searchURL,
               path: 'span.my-other-class'
             }]
           };
