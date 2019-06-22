@@ -10,3 +10,7 @@ cache:
 test:lint:
   script:
     - npm run lint
+
+test:cov:
+  script:
+    - npm run test
