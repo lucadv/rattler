@@ -2,6 +2,7 @@ const Lab = require('lab');
 const Code = require('code');
 const Axios = require('axios');
 const Sinon = require('sinon');
+const Cache = require('memory-cache');
 
 const Rattler = require('../');
 
@@ -29,22 +30,21 @@ describe('Rattler', () => {
       const baseURL = 'http://www.example.com';
       const searchURL = '/endpoint';
       let axiosSpy;
+      const html = '<html><body><span class="my-class">my text</span><span class="my-other-class">my other text</span></body></html>';
+
+      before(async () => {
+        axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }));
+      });
+
+      after(async () => {
+        Axios.get.restore();
+      });
+
+      afterEach(async () => {
+        axiosSpy.resetHistory();
+      });
 
       describe('(single)', () => {
-
-        const html = '<html><body><span class="my-class">my text</span></body></html>';
-
-        before(async () => {
-          axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }));
-        });
-
-        after(async () => {
-          Axios.get.restore();
-        });
-
-        afterEach(async () => {
-          axiosSpy.resetHistory();
-        });
 
         it('should extract text in css selector path', async () => {
           const config = {
@@ -52,11 +52,12 @@ describe('Rattler', () => {
             scrapeList: [{
               label: 'info-1',
               searchURL,
-              path: 'span.my-class'
+              cssSelector: 'span.my-class'
             }]
           };
           const rt = new Rattler(config);
           const result = await rt.extract();
+          console.log(result);
           expect(result).to.exist();
           expect(result['info-1']).to.exist();
           expect(result['info-1'].extractedFrom).to.equal(baseURL + searchURL);
@@ -70,31 +71,17 @@ describe('Rattler', () => {
 
       describe('(multiple same page)', () => {
 
-        const html = '<html><body><span class="my-class">my text</span><span class="my-other-class">my other text</span></body></html>';
-
-        before(async () => {
-          axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }));
-        });
-
-        after(async () => {
-          Axios.get.restore();
-        });
-
-        afterEach(async () => {
-          axiosSpy.resetHistory();
-        });
-
         it('should extract text from multiple selectors', async () => {
           const config = {
             baseURL,
             scrapeList: [{
               label: 'info-1',
               searchURL,
-              path: 'span.my-class'
+              cssSelector: 'span.my-class'
             }, {
               label: 'info-2',
               searchURL,
-              path: 'span.my-other-class'
+              cssSelector: 'span.my-other-class'
             }]
           };
           const rt = new Rattler(config);
@@ -108,7 +95,7 @@ describe('Rattler', () => {
           expect(result['info-2'].extractedFrom).to.equal(baseURL + searchURL);
           expect(result['info-2'].extractedWith).to.equal('span.my-other-class');
           expect(result['info-2'].extractedInfo).to.equal('my other text');
-          expect(axiosSpy.callCount).to.equal(1);
+          expect(axiosSpy.callCount).to.equal(2);
         });
       });
 
