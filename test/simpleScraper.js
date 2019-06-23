@@ -111,11 +111,11 @@ describe('Rattler', () => {
             const result = await rt.extract();
             expect(result).to.exist();
             expect(result['info-1']).to.exist();
-            expect(result['info-1'].extractedFrom).to.equal(baseURL + searchURL);
+            expect(result['info-1'].extractedFrom).to.equal(baseURL);
             expect(result['info-1'].extractedWith).to.equal('span.my-class');
             expect(result['info-1'].extractedInfo).to.equal('my text');
             expect(result['info-2']).to.exist();
-            expect(result['info-2'].extractedFrom).to.equal(baseURL + searchURL);
+            expect(result['info-2'].extractedFrom).to.equal(baseURL);
             expect(result['info-2'].extractedWith).to.equal('span.my-other-class');
             expect(result['info-2'].extractedInfo).to.equal('my other text');
             expect(axiosSpy.callCount).to.equal(2);
