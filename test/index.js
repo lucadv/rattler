@@ -130,6 +130,7 @@ describe('Rattler', () => {
             };
             const rt = new Rattler(config);
             const result = await rt.extract();
+            console.log('result', result);
             expect(result).to.exist();
             expect(result['info-1']).to.exist();
             expect(result['info-1'].extractedFrom).to.equal(baseURL + searchURL);
