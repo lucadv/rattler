@@ -10,6 +10,8 @@
 - [x] BEQUI-6 what does Axios do when the request returns a status code other than 200? does it reject? does it resolve with an object? In case it resolves, we should implement a failing strategy: when the status code is other than 200, we should build a fail object. Suggestion: scrapeSingle function, check the status code, if not 2xx build and return a failing object. 
 - [ ] BEQUI-7 config.scrapeList[n].searchURL, it should be optional and we should just be able to use baseURL if searchURL is not provided
 - [ ] BEQUI-8 implement followNext untill you have a link
+- [ ] BEQUI-9 A scrape factory is create so that a new scraper is returned for each scrape definition in the scrapeList. We need now to implement the FollowNext scraper
+- [ ] BEQUI-10 Add missing test coverage
 
 ## Next items:
 Please pick the one on top of next and work on a branch
