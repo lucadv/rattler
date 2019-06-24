@@ -28,7 +28,7 @@ Single request:
   scrapeList: [{
     label: 'resultStats',
     searchURL: '/search?q=let+me+google+that+for+you',
-    cssSelector: 'div.resultStats'
+    cssSelector: '#main-content.section.div.ul.li.next.a'
   }]
 }
 ```
@@ -68,6 +68,21 @@ Multiple element extracted from different page in the same baseURL:
   }]
 }
 ```
+
+Scrape then follow until you have next page
+
+```javascript
+{
+  baseURL: 'https://www.real-estate-agency.com',
+  scrapeList: [{
+    label: 'pricesForNewYork',
+    searchURL: '/manhattan',
+    cssSelector: 'span.item-price',
+    followNext: {
+      cssSelector: 'div.pagination.ul.li.next'
+    }
+  }] 
+}
 
 ### async extract()
 

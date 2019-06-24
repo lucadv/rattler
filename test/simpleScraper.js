@@ -2,8 +2,9 @@ const Lab = require('@hapi/lab');
 const Code = require('@hapi/code');
 const Axios = require('axios');
 const Sinon = require('sinon');
-const { InvalidConfigError } = require('../lib/errors');
 const Rattler = require('../');
+
+const { RequestError } = require('../lib/errors');
 
 // Test shortcuts
 
@@ -16,83 +17,6 @@ const afterEach = lab.afterEach;
 const expect = Code.expect;
 
 describe('Rattler', () => {
-
-  describe('(with invalid config)', () => {
-
-    it('should fail validation when missing baseURL', async () => {
-      const config = {
-        scrapeList: [{
-          label: 'info-1',
-          searchURL: '/abc',
-          cssSelector: 'span'
-        }]
-      };
-      const throws = () => new Rattler(config);
-      const err = expect(throws).to.throw(InvalidConfigError,
-        'Invalid configuration object - ValidationError: child "baseURL" fails because ["baseURL" is required]');
-      expect(err.path).to.equal('baseURL');
-      expect(err.context).to.equal({ key: 'baseURL', label: 'baseURL' });
-    });
-
-    it('should fail validation when missing scrapeList', async () => {
-      const config = {
-        baseURL: 'aaa'
-      };
-      const throws = () => new Rattler(config);
-      const err = expect(throws).to.throw(InvalidConfigError,
-        'Invalid configuration object - ValidationError: child "scrapeList" fails because ["scrapeList" is required]');
-      expect(err.path).to.equal('scrapeList');
-      expect(err.context).to.equal({ key: 'scrapeList', label: 'scrapeList' });
-    });
-
-    it('should fail validation when missing label inside scrapeList', async () => {
-      const config = {
-        baseURL: 'aaa',
-        scrapeList: [{
-          searchURL: 'bbb',
-          cssSelector: 'span.my-class'
-        }]
-      };
-      const throws = () => new Rattler(config);
-      const err = expect(throws).to.throw(InvalidConfigError,
-        'Invalid configuration object - ValidationError: child "scrapeList" fails because ["scrapeList" at '
-        + 'position 0 fails because [child "label" fails because ["label" is required]]]');
-      expect(err.path).to.equal('scrapeList.0.label');
-      expect(err.context).to.equal({ key: 'label', label: 'label' });
-    });
-
-    it('should fail validation when missing searchURL inside scrapeList', async () => {
-      const config = {
-        baseURL: 'aaa',
-        scrapeList: [{
-          label: 'alabel',
-          cssSelector: 'span.my-class'
-        }]
-      };
-      const throws = () => new Rattler(config);
-      const err = expect(throws).to.throw(InvalidConfigError,
-        'Invalid configuration object - ValidationError: child "scrapeList" fails because ["scrapeList" at '
-        + 'position 0 fails because [child "searchURL" fails because ["searchURL" is required]]]');
-      expect(err.path).to.equal('scrapeList.0.searchURL');
-      expect(err.context).to.equal({ key: 'searchURL', label: 'searchURL' });
-    });
-
-    it('should fail validation when missing cssSelector inside scrapeList', async () => {
-      const config = {
-        baseURL: 'aaa',
-        scrapeList: [{
-          label: 'alabel',
-          searchURL: '/abc'
-        }]
-      };
-      const throws = () => new Rattler(config);
-      const err = expect(throws).to.throw(InvalidConfigError,
-        'Invalid configuration object - ValidationError: child "scrapeList" fails because ["scrapeList" at '
-        + 'position 0 fails because [child "cssSelector" fails because ["cssSelector" is required]]]');
-      expect(err.path).to.equal('scrapeList.0.cssSelector');
-      expect(err.context).to.equal({ key: 'cssSelector', label: 'cssSelector' });
-    });
-  });
 
   describe('(with valid config)', () => {
 
@@ -193,7 +117,7 @@ describe('Rattler', () => {
             }]
           };
           const rt = new Rattler(config);
-          await expect(rt.extract()).to.reject(Error, 'BOOM');
+          await expect(rt.extract()).to.reject(RequestError, 'A request could not be made due to: BOOM');
         });
       });
     });
