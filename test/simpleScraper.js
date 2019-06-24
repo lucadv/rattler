@@ -4,6 +4,8 @@ const Axios = require('axios');
 const Sinon = require('sinon');
 const Rattler = require('../');
 
+const { RequestError } = require('../lib/errors');
+
 // Test shortcuts
 
 const lab = exports.lab = Lab.script();
@@ -115,7 +117,7 @@ describe('Rattler', () => {
             }]
           };
           const rt = new Rattler(config);
-          await expect(rt.extract()).to.reject(Error, 'BOOM');
+          await expect(rt.extract()).to.reject(RequestError, 'A request could not be made due to: BOOM');
         });
       });
     });
