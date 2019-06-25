@@ -94,6 +94,34 @@ describe('Rattler', () => {
             expect(axiosSpy.callCount).to.equal(2);
           });
         });
+
+        describe('(multiple same page, searchURL not provided)', () => {
+          it('should extract text from multiple selectors', async () => {
+            const config = {
+              baseURL,
+              scrapeList: [{
+                label: 'info-1',
+                cssSelector: 'span.my-class'
+              }, {
+                label: 'info-2',
+                cssSelector: 'span.my-other-class'
+              }]
+            };
+            const rt = new Rattler(config);
+            const result = await rt.extract();
+            expect(result).to.exist();
+            expect(result['info-1']).to.exist();
+            expect(result['info-1'].extractedFrom).to.equal(baseURL);
+            expect(result['info-1'].extractedWith).to.equal('span.my-class');
+            expect(result['info-1'].extractedInfo).to.equal('my text');
+            expect(result['info-2']).to.exist();
+            expect(result['info-2'].extractedFrom).to.equal(baseURL);
+            expect(result['info-2'].extractedWith).to.equal('span.my-other-class');
+            expect(result['info-2'].extractedInfo).to.equal('my other text');
+            expect(axiosSpy.callCount).to.equal(2);
+          });
+        });
+
       });
 
       describe('(with errors making the remote request)', () => {

@@ -59,22 +59,6 @@ describe('Rattler', () => {
       expect(err.context).to.equal({ key: 'label', label: 'label' });
     });
 
-    it('should fail validation when missing searchURL inside scrapeList', async () => {
-      const config = {
-        baseURL: 'aaa',
-        scrapeList: [{
-          label: 'alabel',
-          cssSelector: 'span.my-class'
-        }]
-      };
-      const throws = () => new Rattler(config);
-      const err = expect(throws).to.throw(InvalidConfigError,
-        'Invalid configuration object - ValidationError: child "scrapeList" fails because ["scrapeList" at '
-        + 'position 0 fails because [child "searchURL" fails because ["searchURL" is required]]]');
-      expect(err.path).to.equal('scrapeList.0.searchURL');
-      expect(err.context).to.equal({ key: 'searchURL', label: 'searchURL' });
-    });
-
     it('should fail validation when missing cssSelector inside scrapeList', async () => {
       const config = {
         baseURL: 'aaa',
