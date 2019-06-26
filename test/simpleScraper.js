@@ -61,6 +61,20 @@ describe('Rattler', () => {
             expect(result['info-1'].extractedInfo).to.equal('my text');
             expect(axiosSpy.callCount).to.equal(1);
           });
+          // TODO COMPLETE TEST
+          it.skip('should return null if the cssSelector does not match with any element', async () => {
+            const config = {
+              baseURL,
+              scrapeList: [{
+                label: 'info-1',
+                searchURL,
+                cssSelector: 'not-in-the-dom'
+              }]
+            };
+            const rt = new Rattler(config);
+            const result = await rt.extract();
+            console.log(result);
+          });
 
           // TODO add test for selector not found
         });

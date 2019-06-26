@@ -7,6 +7,7 @@
     "no-multi-assign": "off",
     "consistent-return": "off",
     "prefer-arrow-callback": "off",
+    "no-plusplus": "off",
     "prefer-destructuring": ["off", {
       "array": true,
       "object": true

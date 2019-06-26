@@ -2,6 +2,8 @@ const Lab = require('@hapi/lab');
 const Code = require('@hapi/code');
 const Axios = require('axios');
 const Sinon = require('sinon');
+const FS = require('fs');
+const Path = require('path')
 const { NotImplementedError } = require('../lib/errors');
 const Rattler = require('../');
 
@@ -22,14 +24,18 @@ describe('Rattler', () => {
     describe('extract', () => {
 
       const baseURL = 'http://www.example.com';
-      const searchURL = '/endpoint';
+      const searchURL = '/page-1';
       let axiosSpy;
-      const html = '<html><body><span class="my-class">my text</span><span class="my-other-class">my other text</span></body></html>';
-
       describe('(with no errors)', () => {
 
         before(async () => {
-          axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }));
+          axiosSpy = Sinon.stub(Axios, 'get').callsFake(async (url) => {
+            const page = url.split(`${baseURL}/`)[1];
+            const html = FS.readFileSync(Path.join(__dirname, `/artifacts/${page}.html`), 'utf8');
+            return {
+              data: html
+            };
+          });
         });
 
         after(async () => {
@@ -42,20 +48,21 @@ describe('Rattler', () => {
 
         describe('(followNext)', () => {
 
-          it('should return the extracted text from all the pagination links', async () => {
+          it.only('should return the extracted text from all the pagination links', async () => {
             const config = {
               baseURL,
               scrapeList: [{
-                label: 'info-1',
+                label: 'pages',
                 searchURL,
-                cssSelector: 'span.my-class',
+                cssSelector: 'h1',
                 followNext: {
-                  cssSelector: 'div.pagination.ul.li.next'
+                  cssSelector: 'pagination.next'
                 }
               }]
             };
             const rt = new Rattler(config);
-            await expect(rt.extract()).to.reject(NotImplementedError, 'Follow Next Scraper is not yet implemented');
+            const res = rt.extract();
+            console.log('test result', res);
           });
 
           // TODO add test for selector not found
