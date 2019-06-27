@@ -48,7 +48,7 @@ describe('Rattler', () => {
 
         describe('(followNext)', () => {
 
-          it.only('should return the extracted text from all the pagination links', async () => {
+          it('should return the extracted text from all followed pages', async () => {
             const config = {
               baseURL,
               scrapeList: [{
@@ -56,13 +56,20 @@ describe('Rattler', () => {
                 searchURL,
                 cssSelector: 'h1',
                 followNext: {
-                  cssSelector: 'pagination.next'
+                  cssSelector: '#nextLink'
                 }
               }]
             };
             const rt = new Rattler(config);
-            const res = rt.extract();
-            console.log('test result', res);
+            const res = await rt.extract();
+            expect(res.pages).to.exist();
+            // TODO brittle, if we add more pages this will fail
+            expect(res.pages).to.have.length(5);
+            for (let i = 0; i < res.pages.length; i++) {
+              expect(res.pages[i].extractedFrom).to.equal(`http://www.example.com/page-${i + 1}`);
+              expect(res.pages[i].extractedWith).to.equal('h1');
+              expect(res.pages[i].extractedInfo).to.equal(`Page ${i + 1}`);
+            }
           });
 
           // TODO add test for selector not found
