@@ -8,6 +8,7 @@
     "consistent-return": "off",
     "prefer-arrow-callback": "off",
     "no-plusplus": "off",
+    "newline-per-chained-call": "off",
     "prefer-destructuring": ["off", {
       "array": true,
       "object": true

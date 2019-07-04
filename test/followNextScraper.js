@@ -56,7 +56,8 @@ describe('Rattler', () => {
                 searchURL,
                 cssSelector: 'h1',
                 followNext: {
-                  cssSelector: '#nextLink'
+                  cssSelector: '#nextLink',
+                  maxDepth: 5
                 }
               }]
             };
