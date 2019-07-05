@@ -1,10 +1,11 @@
 const Lab = require('@hapi/lab');
 const Code = require('@hapi/code');
 const Axios = require('axios');
+const Cheerio = require('cheerio');
 const Sinon = require('sinon');
 const Rattler = require('../');
 
-const { RequestError } = require('../lib/errors');
+const { RequestError, DOMLoaderError } = require('../lib/errors');
 
 // Test shortcuts
 
@@ -138,30 +139,63 @@ describe('Rattler', () => {
 
       });
 
-      describe('(with errors making the remote request)', () => {
+      describe('(with errors)', () => {
 
-        before(async () => {
-          Sinon.stub(Axios, 'get').callsFake(async () => Promise.reject(new Error('BOOM')));
+        describe('(making the remote request)', () => {
+
+          before(async () => {
+            Sinon.stub(Axios, 'get').callsFake(async () => Promise.reject(new Error('BOOM')));
+          });
+
+          after(async () => {
+            Axios.get.restore();
+          });
+
+          it('should reject with the error', async () => {
+
+            const config = {
+              baseURL,
+              scrapeList: [{
+                label: 'info-1',
+                searchURL,
+                cssSelector: 'span.my-class'
+              }]
+            };
+            const rt = new Rattler(config);
+            await expect(rt.extract()).to.reject(RequestError, 'A request could not be made due to: BOOM');
+          });
         });
 
-        after(async () => {
-          Axios.get.restore();
-        });
+        describe('(loading the DOM)', () => {
 
-        it('should reject with the error', async () => {
+          let cheerioSpy;
 
-          const config = {
-            baseURL,
-            scrapeList: [{
-              label: 'info-1',
-              searchURL,
-              cssSelector: 'span.my-class'
-            }]
-          };
-          const rt = new Rattler(config);
-          await expect(rt.extract()).to.reject(RequestError, 'A request could not be made due to: BOOM');
+          before(async () => {
+            axiosSpy = Sinon.stub(Axios, 'get').callsFake(async () => ({ data: html }));
+            cheerioSpy = Sinon.stub(Cheerio, 'load').throws(new Error('boom'));
+          });
+
+          after(async () => {
+            Axios.get.restore();
+            Cheerio.load.restore();
+          });
+
+          it('should throw an error', async () => {
+            const config = {
+              baseURL,
+              scrapeList: [{
+                label: 'info-1',
+                searchURL,
+                cssSelector: 'span.my-class'
+              }]
+            };
+            const rt = new Rattler(config);
+            await expect(rt.extract()).to.reject(DOMLoaderError, `Could not load DOM for url ${baseURL + searchURL}`);
+            expect(cheerioSpy.calledOnce).to.be.true();
+          });
         });
       });
+
     });
   });
 
