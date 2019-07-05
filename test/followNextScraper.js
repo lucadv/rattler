@@ -5,7 +5,6 @@ const Cheerio = require('cheerio');
 const Sinon = require('sinon');
 const FS = require('fs');
 const Path = require('path');
-const { DOMLoaderError } = require('../lib/errors');
 const Rattler = require('../');
 
 // Test shortcuts
