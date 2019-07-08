@@ -17,3 +17,6 @@ npm-debug.log
 
 # vim files
 *.swp
+
+# mac files
+.DS_Store
