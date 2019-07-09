@@ -1,3 +1,7 @@
+[![pipeline status](https://gitlab.com/ldvlabs/rattler/badges/master/pipeline.svg)](https://gitlab.com/ldvlabs/rattler/commits/master)
+
+[![coverage report](https://gitlab.com/ldvlabs/rattler/badges/master/coverage.svg)](https://gitlab.com/ldvlabs/rattler/commits/master)
+
 # Overview
 
 Rattler is the next web scraper, designed to rattle around the web and extract the info that you need, quickly, efficiently and very politely. In other words, getting the stuff done!
