@@ -1,7 +1,7 @@
 const Lab = require('@hapi/lab');
 const Code = require('@hapi/code');
-const { InvalidConfigError } = require('../lib/errors');
-const Rattler = require('../');
+const { InvalidConfigError } = require('../../lib/errors');
+const Rattler = require('../../');
 
 // Test shortcuts
 

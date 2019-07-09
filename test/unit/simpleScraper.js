@@ -3,9 +3,9 @@ const Code = require('@hapi/code');
 const Axios = require('axios');
 const Cheerio = require('cheerio');
 const Sinon = require('sinon');
-const Rattler = require('../');
+const Rattler = require('../../');
 
-const { RequestError, DOMLoaderError } = require('../lib/errors');
+const { RequestError, DOMLoaderError } = require('../../lib/errors');
 
 // Test shortcuts
 

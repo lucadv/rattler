@@ -4,7 +4,7 @@
   "description": "A powerful web scraper",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/lab -t 100 -v -a @hapi/code",
+    "test": "./node_modules/.bin/lab -t 100 -v -a @hapi/code test/",
     "lint": "./node_modules/.bin/eslint ."
   },
   "author": "Luca Di Vincenzo <ldivincenzo@gmail.com>",
