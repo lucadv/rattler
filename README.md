@@ -88,6 +88,7 @@ Scrape then follow until you have next page or hit the maxDepth limit
     }
   }] 
 }
+```
 
 ### async extract()
 
