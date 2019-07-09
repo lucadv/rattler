@@ -2,9 +2,11 @@
 
 Rattler is the next web scraper, designed to rattle around the web and extract the info that you need, quickly, efficiently and very politely. In other words, getting the stuff done!
 
-You just have to tell the Rattler where is the stuff that you want and how to extract it. Rattler uses Cheerio to load the page and return the stuff that you want, so you can use css selectors (basically the path inside the DOM of the element) to define where in the page you want to extract the info.
+You just have provide a configuration object to the Rattler constructor. The config must have a baseURL (basically the domain from which you want to extract) and a list of scrape definition which Rattler will use to extract the info that you requested. 
 
-You can extract from one page or multiple pages, depending on the configuration. See the usage section. 
+Rattler uses Axios to make http requests and Cheerio to load the page and extract the stuff that you want, so you can use css selectors (basically the path inside the DOM of the element) to define where in the page you want to extract the info.
+
+You can extract from one page or multiple pages, depending on the configuration. You can also instruct Rattler to keep extracting the info while navigating the pagination links, as long as there is a next link. See the usage section. 
 ## Usage
 
 ### constructor()
