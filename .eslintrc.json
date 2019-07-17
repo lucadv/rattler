@@ -9,6 +9,7 @@
     "prefer-arrow-callback": "off",
     "no-plusplus": "off",
     "newline-per-chained-call": "off",
+    "no-await-in-loop": "off",
     "prefer-destructuring": ["off", {
       "array": true,
       "object": true
