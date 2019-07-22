@@ -186,7 +186,7 @@ describe('Rattler', () => {
               Cheerio.load.restore();
             });
 
-            it('should throw an error', async () => {
+            it('should not reject and return result with the error', async () => {
               const config = {
                 baseURL,
                 scrapeList: [{
