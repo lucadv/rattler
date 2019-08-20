@@ -11,6 +11,7 @@ You just have provide a configuration object to the Rattler constructor. The con
 Rattler uses Axios to make http requests and Cheerio to load the page and extract the stuff that you want, so you can use css selectors (basically the path inside the DOM of the element) to define where in the page you want to extract the info.
 
 You can extract from one page or multiple pages, depending on the configuration. You can also instruct Rattler to keep extracting the info while navigating the pagination links, as long as there is a next link. See the usage section. 
+
 ## Usage
 
 ### constructor()
@@ -115,5 +116,7 @@ const config = {
   }]
 };
 const rt = new Rattler(config);
-rt.extract().then(res => console.log(res)).catch(err => console.log(err));
+rt.extract()
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
 ```
