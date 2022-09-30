@@ -13,7 +13,7 @@
   "author": "Luca Di Vincenzo <ldivincenzo@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@hapi/hoek": "^7.1.0",
+    "@hapi/hoek": "^9.0.4",
     "@hapi/joi": "^15.0.3",
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.3",
